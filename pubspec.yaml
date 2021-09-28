@@ -24,6 +24,8 @@ dependencies:
   auto_route: ^2.4.0
   google_fonts: ^2.1.0
   flutter_dotenv: ^5.0.2
+  shared_preferences: ^2.0.8
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
@@ -31,8 +33,7 @@ dev_dependencies:
   freezed: ^0.14.5
   build_runner: ^2.1.2
   auto_route_generator: ^2.4.0
-
-  flutter_lints: ^1.0.0
+  flutter_lints: ^1.0.4
 
 
 flutter:

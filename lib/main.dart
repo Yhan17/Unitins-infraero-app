@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
-void main() {
+import 'env.dart';
+
+void main() async {
+  await Env.init();
   runApp(const MyApp());
 }
 
