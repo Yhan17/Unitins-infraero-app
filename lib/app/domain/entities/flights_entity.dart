@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:infraero/app/domain/entities/traveler_pricing_entity.dart';
+import 'traveler_pricing_entity.dart';
 
 import 'price_entity.dart';
 import 'segment_entity.dart';

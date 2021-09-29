@@ -9,13 +9,13 @@ import '../core/http/credentials_client.dart';
 
 class CredentialsServiceImpl extends CredentialsService {
   final CredentialsHttpClient client;
-  final SharedPreferences preferences;
 
-  CredentialsServiceImpl(this.client, this.preferences);
+  CredentialsServiceImpl(this.client);
 
   @override
   Future<Either<FlightsTokenFailure, Unit>> getFlightApiToken() async {
     try {
+      final preferences = await SharedPreferences.getInstance();
       final response = await client.post(
         'security/oauth2/token',
         data: {

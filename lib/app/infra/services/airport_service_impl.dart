@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:infraero/app/infra/models/airport_model.dart';
+import '../models/airport_model.dart';
 
 import '../../domain/core/failures/service_failures.dart';
 import '../../domain/entities/airport_entity.dart';

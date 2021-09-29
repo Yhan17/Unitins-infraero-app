@@ -9,6 +9,7 @@
 .history
 .svn/
 .env
+*.freezed.dart
 # IntelliJ related
 *.iml
 *.ipr

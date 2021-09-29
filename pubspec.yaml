@@ -7,7 +7,7 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.14.0 <3.0.0"
 
 
 dependencies:
@@ -37,7 +37,10 @@ dev_dependencies:
 
 
 flutter:
-
+  assets:
+    - assets/illustrations/
+    - assets/images/
+    - .env
 
   uses-material-design: true
 

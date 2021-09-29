@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:infraero/app/domain/entities/segment_entity.dart';
+import '../../domain/entities/segment_entity.dart';
 
 import 'aircraft_model.dart';
 import 'arrival_model.dart';
