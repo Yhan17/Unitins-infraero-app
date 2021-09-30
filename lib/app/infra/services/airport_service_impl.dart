@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import '../models/airport_model.dart';
 
 import '../../domain/core/failures/service_failures.dart';
 import '../../domain/entities/airport_entity.dart';
 import '../../domain/services/airport_service.dart';
 import '../core/http/airport_client.dart';
+import '../models/airport_model.dart';
 
 class AirportServiceImpl extends AirportService {
   final AirportHttpClient client;

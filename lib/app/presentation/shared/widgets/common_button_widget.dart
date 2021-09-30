@@ -24,8 +24,9 @@ class CommonButtonWidget extends StatelessWidget {
       child: Container(
         constraints: const BoxConstraints(minHeight: 50),
         decoration: BoxDecoration(
-          color: onTap != null ? AppColors.primaryColor : AppColors.disabledColor,
-          borderRadius: const BorderRadius.all( Radius.circular(15)),
+          color:
+              onTap != null ? AppColors.primaryColor : AppColors.disabledColor,
+          borderRadius: const BorderRadius.all(Radius.circular(15)),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(
@@ -43,14 +44,19 @@ class CommonButtonWidget extends StatelessWidget {
                 ),
               ),
               busy
-                  ? CircularProgressIndicator(
-                      color: AppColors.primaryColor,
-                      backgroundColor: Colors.transparent,
+                  ? const SizedBox(
+                      width: 12,
+                      height: 12,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                        backgroundColor: Colors.transparent,
+                        strokeWidth: 2,
+                      ),
                     )
                   : Icon(
                       icon,
                       color: Colors.white,
-                    )
+                    ),
             ],
           ),
         ),
