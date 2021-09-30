@@ -12,7 +12,6 @@ class AirportModel {
   final String county;
   final double latitude;
   final double longitude;
-  final List<FlightsModel>? flights;
 
   const AirportModel({
     required this.iata,
@@ -23,7 +22,6 @@ class AirportModel {
     required this.county,
     required this.latitude,
     required this.longitude,
-    this.flights,
   });
 
   Map<String, dynamic> toMap() {
@@ -36,7 +34,6 @@ class AirportModel {
       'county': county,
       'latitude': latitude,
       'longitude': longitude,
-      'flights': flights?.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -50,8 +47,6 @@ class AirportModel {
       county: map['county'],
       latitude: map['latitude'],
       longitude: map['longitude'],
-      flights: List<FlightsModel>.from(
-          map['flights']?.map((x) => FlightsModel.fromMap(x))),
     );
   }
 
@@ -65,9 +60,6 @@ class AirportModel {
       longitude: entity.longitude,
       name: entity.name,
       street: entity.street,
-      flights: entity.flights != null
-          ? entity.flights!.map((e) => FlightsModel.fromEntity(e)).toList()
-          : null,
     );
   }
 
@@ -80,8 +72,6 @@ class AirportModel {
         longitude: longitude,
         name: name,
         street: street,
-        flights:
-            flights != null ? flights!.map((e) => e.toEntity()).toList() : null,
       );
 
   String toJson() => json.encode(toMap());

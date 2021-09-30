@@ -5,8 +5,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../domain/core/failures/service_failures.dart';
 import '../../core/theme/app_images.dart';
+import '../../shared/widgets/error_modal_widget.dart';
 import 'notifier/splahs_screen_notifier.dart';
-import 'widgets/error_modal_widget.dart';
 
 class SplashPage extends HookWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -16,7 +16,8 @@ class SplashPage extends HookWidget {
     await notifier.getCredentials();
 
     notifier.last.maybeWhen(
-      loadSuccess: (unit) {
+      loadSuccess: (unit) async {
+        await Future.delayed(const Duration(seconds: 2));
         AutoRouter.of(context).replaceNamed('/origin-airport');
       },
       loadFailure: (failure) {

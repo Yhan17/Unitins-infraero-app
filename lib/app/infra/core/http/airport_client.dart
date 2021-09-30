@@ -15,6 +15,7 @@ class AirportHttpClient extends DioMixin {
         baseUrl: Env.airportApiUrl,
         headers: headers ?? {
           'Accept': 'application/json',
+          'x-rapidapi-key': Env.rapidApiToken,
         },
       );
 }

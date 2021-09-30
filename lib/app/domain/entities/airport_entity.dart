@@ -11,7 +11,6 @@ class AirportEntity extends Equatable {
   final String county;
   final double latitude;
   final double longitude;
-  final List<FlightsEntity>? flights;
   const AirportEntity(
       {required this.iata,
       required this.icao,
@@ -21,7 +20,7 @@ class AirportEntity extends Equatable {
       required this.county,
       required this.latitude,
       required this.longitude,
-      this.flights});
+      });
 
   @override
   List<Object?> get props => [
@@ -33,6 +32,5 @@ class AirportEntity extends Equatable {
         county,
         latitude,
         longitude,
-        flights,
       ];
 }

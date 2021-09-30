@@ -1,12 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import '../models/flights_model.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../domain/core/failures/service_failures.dart';
 import '../../domain/entities/flights_entity.dart';
 import '../../domain/services/flight_service.dart';
 import '../core/http/flight_client.dart';
+import '../models/flights_model.dart';
 
 class FlightServiceImpl extends FlightService {
   final FlightHttpClient client;
@@ -20,16 +21,20 @@ class FlightServiceImpl extends FlightService {
     DateTime departureDate,
   ) async {
     try {
-      final response =
-          await client.get('shopping/flight-offers', queryParameters: {
-        'originLocationCode': originIata,
-        'destinationLocationCode': destinationIata,
-        'adults': passengers,
-        'currencyCode': 'BRL',
-        'nonStop': false,
-        'max': 50,
-        'departureDate': DateFormat('yyyy-MM-dd').format(departureDate),
-      });
+      final preferences = await SharedPreferences.getInstance();
+      final token = preferences.get('tokenjwt');
+
+      final response = await client.get('shopping/flight-offers',
+          queryParameters: {
+            'originLocationCode': originIata,
+            'destinationLocationCode': destinationIata,
+            'adults': passengers,
+            'currencyCode': 'BRL',
+            'nonStop': false,
+            'max': 50,
+            'departureDate': DateFormat('y-MM-d').format(departureDate),
+          },
+          options: Options(headers: {'Authorization': 'Bearer $token'}));
 
       final List list = response.data;
 
