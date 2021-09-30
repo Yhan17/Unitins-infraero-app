@@ -26,7 +26,7 @@ class TravelerPricingModel {
 
   factory TravelerPricingModel.fromMap(Map<String, dynamic> map) {
     return TravelerPricingModel(
-      travelerId: map['travelerId'],
+      travelerId: int.parse(map['travelerId']),
       travelerType: map['travelerType'],
       price: map['price']['total'],
       fareOption: map['fareOption'],

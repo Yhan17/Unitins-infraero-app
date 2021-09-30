@@ -12,36 +12,38 @@ import '../../pages/splash/splash_page.dart';
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
-    // AutoRoute(page: SplashPage, path: '/'),
-    // CustomRoute(
-    //   page: OriginAirportPage,
-    //   path: '/origin-airport',
-    //   transitionsBuilder: TransitionsBuilders.slideLeft,
-    //   durationInMilliseconds: 400,
-    // ),
-    // CustomRoute(
-    //   page: DestinyAirportPage,
-    //   path: '/destiny-airport',
-    //   transitionsBuilder: TransitionsBuilders.slideLeft,
-    //   durationInMilliseconds: 400,
-    // ),
-    // CustomRoute(
-    //   page: DateTripPickerPage,
-    //   path: '/date-picker',
-    //   initial: true,
-    //   transitionsBuilder: TransitionsBuilders.slideLeft,
-    //   durationInMilliseconds: 400,
-    // ),
-    // CustomRoute(
-    //   page: PassengerSelectPage,
-    //   path: '/passenger-select',
-    //   transitionsBuilder: TransitionsBuilders.slideLeft,
-    //   durationInMilliseconds: 400,
-    // ),
+    AutoRoute(
+      page: SplashPage,
+      path: '/',
+      initial: true,
+    ),
+    CustomRoute(
+      page: OriginAirportPage,
+      path: '/origin-airport',
+      transitionsBuilder: TransitionsBuilders.slideLeft,
+      durationInMilliseconds: 400,
+    ),
+    CustomRoute(
+      page: DestinyAirportPage,
+      path: '/destiny-airport',
+      transitionsBuilder: TransitionsBuilders.slideLeft,
+      durationInMilliseconds: 400,
+    ),
+    CustomRoute(
+      page: DateTripPickerPage,
+      path: '/date-picker',
+      transitionsBuilder: TransitionsBuilders.slideLeft,
+      durationInMilliseconds: 400,
+    ),
+    CustomRoute(
+      page: PassengerSelectPage,
+      path: '/passenger-select',
+      transitionsBuilder: TransitionsBuilders.slideLeft,
+      durationInMilliseconds: 400,
+    ),
     CustomRoute(
       page: HomePage,
       path: '/home',
-      initial: true,
       transitionsBuilder: TransitionsBuilders.slideTop,
       durationInMilliseconds: 400,
     ),

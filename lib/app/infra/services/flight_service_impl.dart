@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
@@ -32,15 +34,15 @@ class FlightServiceImpl extends FlightService {
             'currencyCode': 'BRL',
             'nonStop': false,
             'max': 50,
-            'departureDate': DateFormat('y-MM-d').format(departureDate),
+            'departureDate': DateFormat('yyyy-MM-dd').format(departureDate),
           },
           options: Options(headers: {'Authorization': 'Bearer $token'}));
 
-      final List list = response.data;
+      final List list = json.decode(response.data)['data'];
 
       final flights = list
           .map(
-            (e) => FlightsModel.fromMap(e['data'][0]).toEntity(),
+            (e) => FlightsModel.fromMap(e).toEntity(),
           )
           .toList();
 

@@ -4,7 +4,7 @@ import '../../domain/entities/arrival_entity.dart';
 
 class ArrivalModel {
   final String iataCode;
-  final String terminal;
+  final String? terminal;
   final DateTime at;
   const ArrivalModel({
     required this.iataCode,
@@ -24,7 +24,7 @@ class ArrivalModel {
     return ArrivalModel(
       iataCode: map['iataCode'],
       terminal: map['terminal'],
-      at: DateTime.fromMillisecondsSinceEpoch(map['at']),
+      at: DateTime.parse(map['at']),
     );
   }
 
@@ -39,7 +39,7 @@ class ArrivalModel {
   ArrivalEntity toEntity() => ArrivalEntity(
         at: at,
         iataCode: iataCode,
-        terminal: terminal,
+        terminal: terminal ,
       );
 
   String toJson() => json.encode(toMap());

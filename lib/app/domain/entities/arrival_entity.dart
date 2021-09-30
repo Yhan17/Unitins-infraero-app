@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class ArrivalEntity extends Equatable {
   final String iataCode;
-  final String terminal;
+  final String? terminal;
   final DateTime at;
 
   const ArrivalEntity({

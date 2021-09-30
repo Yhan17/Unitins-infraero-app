@@ -20,7 +20,7 @@ class DepartureModel {
   factory DepartureModel.fromMap(Map<String, dynamic> map) {
     return DepartureModel(
       iataCode: map['iataCode'],
-      at: DateTime.fromMillisecondsSinceEpoch(map['at']),
+      at: DateTime.parse(map['at']),
     );
   }
 

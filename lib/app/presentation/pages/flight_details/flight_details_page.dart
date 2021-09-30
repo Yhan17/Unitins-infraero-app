@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/routes/args/flight_details_args.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_images.dart';
 import 'widgets/flight_information_item_widget.dart';
@@ -8,7 +9,11 @@ import 'widgets/flight_title_widget.dart';
 import 'widgets/passenger_information_widget.dart';
 
 class FlightDetailsPage extends StatelessWidget {
-  const FlightDetailsPage({Key? key}) : super(key: key);
+  final FlightDetailsArgs pageArgs;
+  const FlightDetailsPage({
+    Key? key,
+    required this.pageArgs,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +42,8 @@ class FlightDetailsPage extends StatelessWidget {
             fontSize: 18,
             color: AppColors.neutralGrey,
           ),
-          const FlightTitleWidget(
-            text: 'Palmas',
+          FlightTitleWidget(
+            text: pageArgs.originAirportName,
             fontSize: 32,
             color: Colors.black,
           ),
@@ -47,8 +52,8 @@ class FlightDetailsPage extends StatelessWidget {
             fontSize: 18,
             color: AppColors.neutralGrey,
           ),
-          const FlightTitleWidget(
-            text: 'Guarulhos',
+          FlightTitleWidget(
+            text: pageArgs.destinyAirportName,
             fontSize: 32,
             color: Colors.black,
           ),
@@ -83,7 +88,7 @@ class FlightDetailsPage extends StatelessWidget {
             height: 36,
           ),
           ListView.separated(
-            itemCount: 2,
+            itemCount: pageArgs.flight.travelerPricings.length,
             shrinkWrap: true, // 1st add
             separatorBuilder: (_, index) {
               return const SizedBox(
@@ -96,7 +101,16 @@ class FlightDetailsPage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 15).copyWith(
                   bottom: 10,
                 ),
-                child: PassengerInformationWidget(),
+                child: PassengerInformationWidget(
+                  code: pageArgs.flight.segments.first.aircraft.code,
+                  fareOption:
+                      pageArgs.flight.travelerPricings[index].fareOption,
+                  total: pageArgs.flight.travelerPricings[index].price,
+                  travelerId: pageArgs.flight.travelerPricings[index].travelerId
+                      .toString(),
+                  travelerType:
+                      pageArgs.flight.travelerPricings[index].travelerType,
+                ),
               );
             },
           )

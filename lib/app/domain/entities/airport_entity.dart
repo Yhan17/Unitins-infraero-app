@@ -1,7 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-import 'flights_entity.dart';
-
 class AirportEntity extends Equatable {
   final String iata;
   final String icao;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:infraero/app/presentation/utils/app_pipes.dart';
 import '../../../core/theme/app_images.dart';
 
 import '../../../core/theme/app_colors.dart';
@@ -6,7 +7,19 @@ import 'money_card_widget.dart';
 import 'passenger_text_widget.dart';
 
 class PassengerInformationWidget extends StatelessWidget {
-  const PassengerInformationWidget({Key? key}) : super(key: key);
+  final String travelerId;
+  final String total;
+  final String code;
+  final String fareOption;
+  final String travelerType;
+  const PassengerInformationWidget({
+    Key? key,
+    required this.travelerId,
+    required this.total,
+    required this.code,
+    required this.fareOption,
+    required this.travelerType,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +47,14 @@ class PassengerInformationWidget extends StatelessWidget {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 PassengerTextWidget(
-                  text: '1',
+                  title: 'Passageiro',
+                  text: travelerId,
                   textAlign: TextAlign.start,
-                  title: 'Passageiros',
                 ),
                 MoneyCardWidget(
-                  value: r'R$ 680,90',
+                  value: AppPipes.formatMoney(double.parse(total)),
                 ),
               ],
             ),
@@ -51,23 +64,23 @@ class PassengerInformationWidget extends StatelessWidget {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 PassengerTextWidget(
                   text: 'Voo',
                   textAlign: TextAlign.start,
-                  title: '3522',
+                  title: code,
                 ),
                 PassengerTextWidget(
                   text: 'Ala',
                   textAlign: TextAlign.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  title: 'Standard',
+                  title: fareOption,
                 ),
                 PassengerTextWidget(
                   text: 'type',
                   textAlign: TextAlign.end,
                   crossAxisAlignment: CrossAxisAlignment.end,
-                  title: 'Adult',
+                  title: travelerType,
                 ),
               ],
             ),

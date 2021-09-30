@@ -1,9 +1,12 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:infraero/app/presentation/core/routes/router.gr.dart';
 
 import '../../../../domain/core/failures/service_failures.dart';
+import '../../../core/routes/args/home_args.dart';
 import '../../../core/routes/args/passenger_select_args.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_illustration.dart';
@@ -14,10 +17,10 @@ import '../notifiers/airport_form_notifier.dart';
 import '../notifiers/search_flights_notifier.dart';
 
 class PassengerSelectPage extends HookWidget {
-  final PassengerSelectArgs args;
+  final PassengerSelectArgs pageArgs;
   const PassengerSelectPage({
     Key? key,
-    required this.args,
+    required this.pageArgs,
   }) : super(key: key);
 
   @override
@@ -65,7 +68,7 @@ class PassengerSelectPage extends HookWidget {
               onChanged: (double value) {
                 _currentSliderValue.value = value;
                 airportFormNotifier.changePassengers(
-                  int.parse(value.toString()),
+                  int.parse(value.round().toString()),
                 );
               },
             ),
@@ -73,57 +76,64 @@ class PassengerSelectPage extends HookWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 19),
             child: ProviderListener<SearchFlightState>(
-                onChange: (context, state) {
-                  state.maybeWhen(
-                    loadFailure: (failure) {
-                      switch (failure) {
-                        case FlightsFailure.badRequest:
-                          const ErrorModalWidget(
-                            text: 'Houve um problema com a requisição',
-                          ).show(context);
-                          break;
-                        case FlightsFailure.expiredToken:
-                          const ErrorModalWidget(
-                            text:
-                                'Ops parece que seu token expirou reinicie o app',
-                          ).show(context);
-                          break;
-                        case FlightsFailure.serverError:
-                          const ErrorModalWidget(
-                            text:
-                                'Ops parece que algo deu errado no servidor',
-                          ).show(context);
-                          break;
-                      }
+              onChange: (context, state) {
+                state.maybeWhen(
+                  loadFailure: (failure) {
+                    switch (failure) {
+                      case FlightsFailure.badRequest:
+                        const ErrorModalWidget(
+                          text: 'Houve um problema com a requisição',
+                        ).show(context);
+                        break;
+                      case FlightsFailure.expiredToken:
+                        const ErrorModalWidget(
+                          text:
+                              'Ops parece que seu token expirou reinicie o app',
+                        ).show(context);
+                        break;
+                      case FlightsFailure.serverError:
+                        const ErrorModalWidget(
+                          text: 'Ops parece que algo deu errado no servidor',
+                        ).show(context);
+                        break;
+                    }
+                  },
+                  loadSuccess: (listFlights) {
+                    final HomeArgs args = HomeArgs(
+                      pageArgs.destiny,
+                      pageArgs.origin,
+                      listFlights,
+                    );
+                     AutoRouter.of(context).push(
+                        HomeRoute(pageArgs: args),
+                      );
+                  },
+                  orElse: () {},
+                );
+              },
+              provider: searchFlightsNotifierProvider,
+              child: Consumer(
+                builder: (_, watch, __) {
+                  final state = watch(searchFlightsNotifierProvider);
+                  return CommonButtonWidget(
+                    text: 'Finalizar',
+                    busy: state.maybeWhen(
+                      loadInProgress: () => true,
+                      orElse: () => false,
+                    ),
+                    onTap: () {
+                      searchFlightsNotifier.getFlights(
+                        originIata: airportFormNotifier.last.originAirport,
+                        destinationIata:
+                            airportFormNotifier.last.destinyAirport,
+                        passengers: airportFormNotifier.last.passengers,
+                        departureDate: departureDate!,
+                      );
                     },
-                    loadSuccess: (listFlights) {
-                      
-                    },
-                    orElse: () {},
                   );
                 },
-                provider: searchFlightsNotifierProvider,
-                child: Consumer(
-                  builder: (_, watch, __) {
-                    final state = watch(searchFlightsNotifierProvider);
-                    return CommonButtonWidget(
-                      text: 'Finalizar',
-                      busy: state.maybeWhen(
-                        loadInProgress: () => true,
-                        orElse: () => false,
-                      ),
-                      onTap: () {
-                        searchFlightsNotifier.getFlights(
-                          originIata: airportFormNotifier.last.originAirport,
-                          destinationIata:
-                              airportFormNotifier.last.destinyAirport,
-                          passengers: airportFormNotifier.last.passengers,
-                          departureDate: departureDate!,
-                        );
-                      },
-                    );
-                  },
-                )),
+              ),
+            ),
           )
         ],
       ),

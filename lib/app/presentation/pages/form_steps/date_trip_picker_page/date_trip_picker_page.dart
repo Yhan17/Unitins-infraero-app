@@ -15,10 +15,10 @@ import '../../../shared/widgets/default_scaffold_widget.dart';
 import '../notifiers/airport_form_notifier.dart';
 
 class DateTripPickerPage extends HookWidget {
-  // final DateTripPickerArgs pageArgs;
+  final DateTripPickerArgs pageArgs;
   const DateTripPickerPage({
     Key? key,
-    // required this.pageArgs,
+    required this.pageArgs,
   }) : super(key: key);
 
   @override
@@ -83,14 +83,14 @@ class DateTripPickerPage extends HookWidget {
               text: 'Continuar',
               onTap: canContinue
                   ? () {
-                      // final PassengerSelectArgs args = PassengerSelectArgs(
-                      //   origin: pageArgs.origin,
-                      //   destiny: pageArgs.destiny,
-                      //   departureDate: airportFormNotifier.last.departureDate,
-                      // );
-                      // AutoRouter.of(context).push(
-                      //   PassengerSelectRoute(args: args),
-                      // );
+                      final PassengerSelectArgs args = PassengerSelectArgs(
+                        origin: pageArgs.origin,
+                        destiny: pageArgs.destiny,
+                        departureDate: airportFormNotifier.last.departureDate,
+                      );
+                      AutoRouter.of(context).push(
+                        PassengerSelectRoute(pageArgs: args),
+                      );
                     }
                   : null,
             ),

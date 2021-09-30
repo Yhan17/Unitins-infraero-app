@@ -53,11 +53,10 @@ class SplashPage extends HookWidget {
     final splashNotifier = useProvider(splashScreenNotifierProvider.notifier);
 
     useEffect(() {
-      // _getCredentials(
-      //   splashNotifier,
-      //   context,
-      // );
-      AutoRouter.of(context).replaceNamed('/origin-airport');
+      _getCredentials(
+        splashNotifier,
+        context,
+      );
       return () {};
     }, const []);
 

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import '../../domain/entities/airport_entity.dart';
-import 'flights_model.dart';
 
 class AirportModel {
   final String iata;

@@ -106,8 +106,8 @@ class _ContinueButton extends HookWidget {
   Widget build(BuildContext context) {
     final canContinue = useProvider(airportFormNotifierProvider
         .select((value) => value.destinyAirportCanContinue));
-    final originIata = useProvider(
-        airportFormNotifierProvider.select((value) => value.originAirport));
+    final destinyIata = useProvider(
+        airportFormNotifierProvider.select((value) => value.destinyAirport));
 
     return ProviderListener<DestinyAirportState>(
       onChange: (context, state) {
@@ -134,9 +134,9 @@ class _ContinueButton extends HookWidget {
           loadSuccess: (destinyAirport) {
             final DateTripPickerArgs args = DateTripPickerArgs(
                 origin: pageArgs.origin, destiny: destinyAirport);
-            // AutoRouter.of(context).push(
-            //   DateTripPickerRoute(pageArgs: args),
-            // );
+            AutoRouter.of(context).push(
+              DateTripPickerRoute(pageArgs: args),
+            );
           },
           orElse: () {},
         );
@@ -145,20 +145,17 @@ class _ContinueButton extends HookWidget {
       child: Consumer(
         builder: (_, watch, __) {
           final state = watch(destinyAirporNotifierProvider);
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 19),
-            child: CommonButtonWidget(
-              text: 'Continuar',
-              busy: state.maybeWhen(
-                loadInProgress: () => true,
-                orElse: () => false,
-              ),
-              onTap: canContinue
-                  ? () async {
-                      await destinyAirportNotifier.getAirport(originIata);
-                    }
-                  : null,
+          return CommonButtonWidget(
+            text: 'Continuar',
+            busy: state.maybeWhen(
+              loadInProgress: () => true,
+              orElse: () => false,
             ),
+            onTap: canContinue
+                ? () async {
+                    await destinyAirportNotifier.getAirport(destinyIata);
+                  }
+                : null,
           );
         },
       ),

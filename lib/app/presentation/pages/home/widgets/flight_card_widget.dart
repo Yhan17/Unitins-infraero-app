@@ -1,19 +1,37 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../core/routes/args/flight_details_args.dart';
+import '../../../core/routes/router.gr.dart';
+import '../../../utils/app_pipes.dart';
 import 'package:timelines/timelines.dart';
 import 'dart:math' as math;
-
+import '../../../../domain/entities/flights_entity.dart';
 import '../../../core/theme/app_colors.dart';
 
 class FlightCardWidget extends StatelessWidget {
-  const FlightCardWidget({Key? key}) : super(key: key);
+  final String originCity;
+  final String destinyCity;
+  final String originIata;
+  final String destinyIata;
+  final FlightsEntity flight;
+
+  const FlightCardWidget({
+    Key? key,
+    required this.originCity,
+    required this.destinyCity,
+    required this.originIata,
+    required this.destinyIata,
+    required this.flight,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        AutoRouter.of(context).pushNamed('/flight-detail');
+        AutoRouter.of(context).push(FlightDetailsRoute(
+          pageArgs: FlightDetailsArgs(originCity, destinyCity, flight),
+        ));
       },
       child: Container(
         height: 200,
@@ -38,7 +56,7 @@ class FlightCardWidget extends StatelessWidget {
               children: [
                 Flexible(
                   child: Text(
-                    'Palmas\n(PMW)',
+                    '$originCity\n($originIata)',
                     style: GoogleFonts.poppins(
                       color: AppColors.primaryColor,
                       fontWeight: FontWeight.bold,
@@ -49,7 +67,7 @@ class FlightCardWidget extends StatelessWidget {
                 ),
                 Flexible(
                   child: Text(
-                    'Guarulhos\n(GRU)',
+                    '$destinyCity\n($destinyIata)',
                     style: GoogleFonts.poppins(
                       color: AppColors.primaryColor,
                       fontWeight: FontWeight.bold,
@@ -64,7 +82,7 @@ class FlightCardWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Saída:\n01/11/2021',
+                  'Saída:\n${AppPipes.formatDate(flight.segments.first.departure.at)}',
                   style: GoogleFonts.poppins(
                     color: AppColors.neutralGrey,
                     fontWeight: FontWeight.bold,
@@ -73,7 +91,7 @@ class FlightCardWidget extends StatelessWidget {
                   textAlign: TextAlign.left,
                 ),
                 Text(
-                  'Voô:\n3989',
+                  'Voô:\n ${flight.segments.first.aircraft.code}',
                   style: GoogleFonts.poppins(
                     color: AppColors.neutralGrey,
                     fontWeight: FontWeight.bold,
@@ -131,7 +149,7 @@ class FlightCardWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  r'R$ 689,90',
+                  AppPipes.formatMoney(flight.price.total),
                   style: GoogleFonts.poppins(
                     color: AppColors.secondaryColor,
                     fontWeight: FontWeight.bold,

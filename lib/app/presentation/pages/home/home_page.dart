@@ -2,13 +2,17 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:timelines/timelines.dart';
+import 'package:infraero/app/presentation/core/routes/args/home_args.dart';
 
 import '../../core/theme/app_colors.dart';
 import 'widgets/flight_card_widget.dart';
 
 class HomePage extends HookWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final HomeArgs pageArgs;
+  const HomePage({
+    Key? key,
+    required this.pageArgs,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +39,7 @@ class HomePage extends HookWidget {
               children: [
                 Flexible(
                   child: Text(
-                    'Palmas–Brigadeiro Lysias Rodrigues Airport',
+                    pageArgs.origin.name,
                     style: GoogleFonts.poppins(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -71,17 +75,27 @@ class HomePage extends HookWidget {
   }
 
   Widget _listViewGenerate(BuildContext context) {
-    return ListView(
-      shrinkWrap: true,
-      children: List.generate(10, (index) {
-        return const Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: 22,
-            vertical: 16,
-          ),
-          child: FlightCardWidget(),
+    return ListView.separated(
+      separatorBuilder: (_, index) {
+        return const SizedBox(
+          height: 20,
         );
-      }),
+      },
+      shrinkWrap: true,
+      itemCount: pageArgs.flights.length,
+      itemBuilder: (_, index) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 22)
+              .copyWith(top: index == 0 ? 30 : null),
+          child: FlightCardWidget(
+            destinyCity: pageArgs.destiny.county,
+            destinyIata: pageArgs.destiny.iata,
+            flight: pageArgs.flights[index],
+            originCity: pageArgs.origin.county,
+            originIata: pageArgs.origin.iata,
+          ),
+        );
+      },
     );
   }
 }

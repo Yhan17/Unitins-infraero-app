@@ -35,7 +35,7 @@ class FlightsModel {
 
   factory FlightsModel.fromMap(Map<String, dynamic> map) {
     return FlightsModel(
-      lastTicketingDate: DateTime.fromMillisecondsSinceEpoch(
+      lastTicketingDate: DateTime.parse(
         map['lastTicketingDate'],
       ),
       numberOfBookableSeats: map['numberOfBookableSeats'],

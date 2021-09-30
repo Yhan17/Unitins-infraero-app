@@ -6,7 +6,7 @@ class PriceModel {
   final double total;
   final double base;
   final String currency;
-  final List<AdditionalServicesModel> additionalServices;
+  final List<AdditionalServicesModel>? additionalServices;
   const PriceModel({
     required this.total,
     required this.base,
@@ -19,7 +19,9 @@ class PriceModel {
       'total': total,
       'base': base,
       'currency': currency,
-      'additionalServices': additionalServices.map((x) => x.toMap()).toList(),
+      'additionalServices': additionalServices != null
+          ? additionalServices!.map((x) => x.toMap()).toList()
+          : null,
     };
   }
 
@@ -28,20 +30,23 @@ class PriceModel {
       total: entity.total,
       base: entity.base,
       currency: entity.currency,
-      additionalServices: entity.additionalServices
-          .map(
-            (e) => AdditionalServicesModel(
-              amount: e.amount,
-              type: e.type,
-            ),
-          )
-          .toList(),
+      additionalServices: entity.additionalServices != null
+          ? entity.additionalServices!
+              .map(
+                (e) => AdditionalServicesModel(
+                  amount: e.amount,
+                  type: e.type,
+                ),
+              )
+              .toList()
+          : null,
     );
   }
 
   PriceEntity toEntity() => PriceEntity(
-        additionalServices:
-            additionalServices.map((e) => e.toEntity()).toList(),
+        additionalServices: additionalServices != null
+            ? additionalServices!.map((e) => e.toEntity()).toList()
+            : null,
         base: base,
         currency: currency,
         total: total,
@@ -49,12 +54,13 @@ class PriceModel {
 
   factory PriceModel.fromMap(Map<String, dynamic> map) {
     return PriceModel(
-      total: map['total'],
-      base: map['base'],
+      total: double.parse(map['total']),
+      base: double.parse(map['base']),
       currency: map['currency'],
-      additionalServices: List<AdditionalServicesModel>.from(
-          map['additionalServices']
-              ?.map((x) => AdditionalServicesModel.fromMap(x))),
+      additionalServices: map['additionalServices'] != null
+          ? List<AdditionalServicesModel>.from(map['additionalServices']
+              ?.map((x) => AdditionalServicesModel.fromMap(x)))
+          : null,
     );
   }
 
@@ -81,7 +87,7 @@ class AdditionalServicesModel {
 
   factory AdditionalServicesModel.fromMap(Map<String, dynamic> map) {
     return AdditionalServicesModel(
-      amount: map['amount'],
+      amount: double.parse(map['amount']),
       type: map['type'],
     );
   }

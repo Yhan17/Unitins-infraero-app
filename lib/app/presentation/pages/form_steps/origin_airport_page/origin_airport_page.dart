@@ -122,9 +122,9 @@ class _ContinueButton extends HookWidget {
           },
           loadSuccess: (originAirport) {
             final DestinyAirportArgs args = DestinyAirportArgs(originAirport);
-            // AutoRouter.of(context).push(
-            //   DestinyAirportRoute(args: args),
-            // );
+            AutoRouter.of(context).push(
+              DestinyAirportRoute(args: args),
+            );
           },
           orElse: () {},
         );

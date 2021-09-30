@@ -4,7 +4,7 @@ class PriceEntity extends Equatable {
   final double total;
   final double base;
   final String currency;
-  final List<AdditionalServicesEntity> additionalServices;
+  final List<AdditionalServicesEntity>? additionalServices;
 
   const PriceEntity({
     required this.total,
